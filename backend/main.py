@@ -1,14 +1,10 @@
-from fastapi import FastAPI, HTTPException, Depends
-import uvicorn
-from typing import Annotated
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from fastapi import FastAPI, HTTPException, Depends, status
+from typing import Annotated, TypeAlias
+from sqlmodel import Session, SQLModel, create_engine, select
+
+from models import Coffee
 
 app = FastAPI()
-
-class Coffee(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    price: float = Field(index=True, default=0.00)
 
 sqlite_file_name = "coffee.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
@@ -23,18 +19,16 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-SessionDep = Annotated[Session, Depends(get_session)]
+SessionDep: TypeAlias = Annotated[Session, Depends(get_session)]
 
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World!"}
+# START WRITING YOUR CODE HERE!
 
 
+# Stuff to run our server :P
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

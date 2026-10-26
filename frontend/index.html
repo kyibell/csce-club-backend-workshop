@@ -9,18 +9,13 @@
       rel="stylesheet"
     />
     <title>CSCE Club Backend Workshop</title>
+    <script src="js/main.js"></script>
   </head>
   <body>
     <!-- Nav Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">CSCE Club Backend Workshop</a>
-      </div>
-      <div class="navbar-nav">
-        <a class="nav-link" href="">GET Coffees</a>
-      </div>
-      <div class="navbar-nav">
-        <a class="nav-link" href="">POST Coffee</a>
       </div>
     </nav>
 
@@ -29,6 +24,96 @@
         Welcome to the CSCE Club Backend Workshop! This is a simple frontend
         page that you use to make sure your backend API works.
       </p>
+    </div>
+
+    <div class="container mt-4">
+      <h2>API Endpoints</h2>
+      <button onclick="getCoffees()">GET Coffees</button>
+      <button onClick="showGetCoffeeContainer()">GET Coffee</button>
+      <button onClick="showPostContainer()">POST Coffee</button>
+      <button onClick="showDeleteCoffeeContainer()">DELETE Coffee</button>
+    </div>
+
+    <!-- Post Container -->
+    <div class="d-none mt-4 mx-auto" id="post-container">
+      <form id="post-form">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            name="price"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onclick="
+            postCoffee();
+            clearPostContainer();
+          "
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <!-- Get Coffee Container -->
+    <div class="d-none mt-4 mx-auto" id="get-coffee-container">
+      <form id="get-coffee-form">
+        <div class="mb-3">
+          <label for="id" class="form-label">ID</label>
+          <input type="text" class="form-control" id="id" name="id" required />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onclick="
+            getCoffee(document.querySelector('#id').value);
+            clearGetCoffeeContainer();
+          "
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <!-- Delete Coffee Container -->
+    <div class="d-none mt-4 mx-auto" id="delete-coffee-container">
+      <form id="delete-coffee-form">
+        <div class="mb-3">
+          <label for="delete-id" class="form-label">ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="delete-id"
+            name="delete-id"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-danger"
+          onclick="
+            deleteCoffee(document.querySelector('#delete-id').value);
+            clearDeleteCoffeeContainer();
+          "
+        >
+          Submit
+        </button>
+      </form>
     </div>
   </body>
 </html>
